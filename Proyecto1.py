@@ -1,12 +1,16 @@
 '''Esto es un proyecto de inventario de Tienda
    Tratando de aplicar lo aprendido en el curso de python 
    de la universidad Nacional de colombia PT.1'''
+print()
 
 print('Bienvenido'.center(100,'-'))
 
 print()
 
+print('Para conocer los comandos ingrese \'Help\'')
 Inv = {} #Diccionario donde se almacena los datos
+
+print()
 
 while True:
    comando = str(input(('Ingresa un comando: ')))
@@ -17,6 +21,7 @@ while True:
 
       name_item = input('Ingrese el nombre del item: ')
       print()
+      name_item = name_item.upper()
       amount_item = int(input('Ingrese la cantidad: '))
       print()
       value_item = int(input('Ingrese el valor: '))
@@ -37,6 +42,7 @@ while True:
       while True: #En este ciclo se empezara el proceso de compra
 
          name_item = input('Ingrese el nombre del item: ')
+         name_item.upper()
          print()
          if name_item not in Inv:
                print('El Articulo no esta registrado en el inventario')
