@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
+    <script src=" 	https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://kit.fontawesome.com/b7f27d0091.js" crossorigin="anonymous" defer></script>
+
+    
+
+    <script src="index.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Inventario</h1>
+
+    <div class="container-fluid">
+        <form action="" name="inventario" method="get" id="agregar_items">
+    <input type="text" name="lado" class='inv_add' id="nombre" maxlength="33" placeholder="Nombre">
+    <input type="text" name="lado" class='inv_add' id="cantidad" maxlength="9" placeholder="cantidad">
+    <input type="text" name="lado" class='inv_add' id="precio" maxlength="9" placeholder="Precio">
+
+    <input type="submit" class='btn btn-primary' id="agregar" name="boton" value="Agregar">
+
+</form>
+    </div>
+<div class="contariner-fluid">
+
+</div>
+
+<div class="container-fluid" id="lista_items">
+
+<ul id="items">
+    
+</ul>        
+
+<form action="" name="inventario" method="get" id="agregar_items">
+<input type="submit" class='btn btn-primary reset' id="reset" name="reset" value="Resetear lista">
+</form>
+
+</div>
+</body>
+
+</html>

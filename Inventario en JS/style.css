@@ -1,0 +1,45 @@
+body{
+    background-color: black;
+    color: white;
+}
+.inv_add{
+    margin: 2% 4%;
+    width: 350px;
+    text-align: center;
+}
+
+#items{
+    list-style: decimal;
+    
+}
+
+li{
+    margin-top: 2rem;
+
+}
+
+#espacio{
+    margin-left: 77px;
+}
+
+#lista_items{
+    margin: 2% 2%;
+}
+
+.item_text{
+    text-align: center;
+}
+
+.delete{
+    margin-left: 13rem;
+}
+
+.cantidad_item{
+    text-align: center;
+    margin-left: 8rem;
+}
+
+.precio_item{
+    text-align: center;
+    margin-left: 19rem;
+}

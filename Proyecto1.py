@@ -1,6 +1,7 @@
 '''Esto es un proyecto de inventario de Tienda
    Tratando de aplicar lo aprendido en el curso de python 
    de la universidad Nacional de colombia PT.1'''
+
 print()
 
 print('Bienvenido'.center(100,'-'))
@@ -42,7 +43,7 @@ while True:
       while True: #En este ciclo se empezara el proceso de compra
 
          name_item = input('Ingrese el nombre del item: ')
-         name_item.upper()
+         name_item = name_item.upper()
          print()
          if name_item not in Inv:
                print('El Articulo no esta registrado en el inventario')
