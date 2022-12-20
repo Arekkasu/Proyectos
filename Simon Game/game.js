@@ -19,6 +19,17 @@ $(document).keypress(function () {
     
 });
 
+
+$('.start').click(function () { 
+  if (!start) {
+
+      $("#level-title").text("Level " + level);
+      nextSequence();
+      start = true;
+    }
+  
+});
+
 function nextSequence() {
     userClickPattern = []
 
