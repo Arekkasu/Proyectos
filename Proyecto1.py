@@ -1,7 +1,3 @@
-'''Esto es un proyecto de inventario de Tienda
-   Tratando de aplicar lo aprendido en el curso de python 
-   de la universidad Nacional de colombia PT.1'''
-
 print()
 
 print('Bienvenido'.center(100,'-'))

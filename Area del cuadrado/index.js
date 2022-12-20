@@ -6,7 +6,7 @@ var formulario = document.getElementsByName('calculate')[0],
 
 var proceso = (un_reload) => {
     if(calculate.lado.value == 0){
-        alert('tiene que se mayro que 0')
+        alert('tiene que se mayor que 0')
         un_reload.preventDefault()
         return
     }
