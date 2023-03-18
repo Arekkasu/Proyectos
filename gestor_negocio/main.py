@@ -3,53 +3,67 @@ import pandas as pd
 import random
 from termcolor import colored, cprint
 
-Workers_csv = pd.read_csv("Assets/workers.csv", index_col = 0)
-Products_csv = pd.read_csv("Assets/products.csv", index_col= 0)
+Workers_csv = pd.read_csv("Assets/workers.csv")
+Products_csv = pd.read_csv("Assets/products.csv")
 
 pd.options.display.max_rows = None
 
 sep = '--------------------------------------------------------------------------'
 
-def registrar_Empleado(name, last_name, sex, age, mobile_number, selling_products = 0):
-    if len(Workers_csv.index) == 100:
-        text = cprint('Registro de empleados llenos', 'red')
-        return text
-    try:
-        last_id = Workers_csv.index.max()+1
-    except:
-        last_id = 1
-    with open('Assets/workers.csv', mode = 'a+') as workers:
-        workers.write(f"\n{last_id},{name},{last_name},{sex},{age},{mobile_number}, {selling_products}")
-    workers.close()
-    text = cprint('\nEmpleado Registrado correctamente', 'green')
-    time.sleep(2)
-    return text
+def read_again_datas():
+
+    """
+    Se decide llamar la variable correspondiente al dataframe y se le asigna que se lea nuevamente en una variable,
+    permitiendo que se mantega la lectura desde su ultima modificacion y al final con la funcion concat(), se unen los
+    data frames y se genera uno solo
+    """
+    global Workers_csv
+    global Products_csv
+    new_data_workers = pd.read_csv('Assets/workers.csv')
+    new_data_products = pd.read_csv('Assets/products.csv')
+                                                    #Se seleciona verdadero para que consever el orden del index
+    Workers_csv = pd.concat([Workers_csv, new_data_workers], ignore_index=True)
+    Products_csv = pd.concat([Products_csv, new_data_products], ignore_index=True)
+
+
+
+def registrar_Empleado(name, last_name, sex, age, mobile_number, username, password,selling_products = 0):
+
+    if ((Workers_csv['name'] == name) & (Workers_csv['last_name'] == last_name) & (Workers_csv['cel_number'] == mobile_number)).any():
+        output = cprint(f"El siguiente empleado {name} {last_name}, ya se encuentra registrado", "red")
+    else:
+        with open('Assets/workers.csv', mode='+a') as workers:
+            workers.write(f"{name},{last_name},{sex},{age},{mobile_number},{username}, {password},{selling_products}\n")
+            workers.close()
+        time.sleep(2)
+        output = cprint("Empleado Registrado Correctamente", "green")
+    return output
 
 def registrar_producto(id_product, name_product, price, quantity):
-    id = id_product
-    count = 0
-    while True:
-        if (id in Products_csv.index) and count < 999:
-            id = random.randint(0, 1000000)
-        break
+
     with open('Assets/products.csv', mode = 'a+') as products:
         products.write(f"\n{id_product},{name_product},{price},{quantity}")
     products.close()
 
 def existencia_producto(name_product):
-
     try:
         # Detecta el indice del dataframe si esta registrado o no
         row = Products_csv.loc[Products_csv["name_product"] == name_product]
         row_id = row.index[0]
-        print(f"El producto {name_product.capitalize()} existe y hay {Products_csv.loc[row_id, 'quantity']} unidades disponibles.\nsu precio es {Products_csv.loc[row_id, 'price']}")
+        return print(f"El producto {name_product.capitalize()} existe y hay {Products_csv.loc[row_id, 'quantity']} unidades disponibles.\nsu precio es {Products_csv.loc[row_id, 'price']}")
     except:
-        pass
         # Al no estar registrado o no existe en el dataframe regresara el mensaje que no existe
-    print(f"El producto {name_product} no existe")
+        return print(f"El producto {name_product} no existe")
 
 def products_list():
     print(Products_csv)
+
+def username_and_password(name, last_name):
+    x = name[0:3]+'_'+last_name[0:4]
+    y = str(random.randint(111,999))+name[::3]
+    return x, y
+
+
 
 
 def main():
@@ -58,6 +72,10 @@ def main():
 
         command = input(f"Ingresa un comando, en caso de no conocer un comando ingrese \'{colored('help', 'green', 'on_dark_grey')}\': ").upper()
 
+
+        """
+        OPCION DE REGISTRO DE EMPLEADO, EL CUAL PEDIRA LOS DATOS, Y SE GENERA UNA USERNAME Y UNA CONTRASENA MEDIANTE UNA FUNCION
+        """
         if command == '1':
             print(sep)
             cprint("\n-----------------Registro de empleado-----------------------\n")
@@ -68,10 +86,15 @@ def main():
                     break
                 try:
                     name, last_name, sex, age, cel_number = command.split()
-                    registrar_Empleado(name, last_name, sex, age, cel_number)
+                    username, password = username_and_password(name, last_name)
+                    read_again_datas()
+                    registrar_Empleado(name, last_name, sex, age, cel_number, username, password)
+
                 except:
                     cprint("\nERROR AL REGISTRAR EL USAURIO, INGRESA TODOS LOS DATOS", 'red')
                     continue
+
+            # REGISTRAR PRODUCTO
         elif command == '2':
             print(f"Ingrese el nombre, apellido, sexo {colored('(M para Masculino y F para Femenino)', 'yellow')}, edad y numero de celular, separados por espacios")
             name, last_name, sex, age, cel_number = input().split()
