@@ -10,34 +10,31 @@ pd.options.display.max_rows = None
 
 sep = '--------------------------------------------------------------------------'
 
-def read_again_datas():
+def actualizar_workers_csv():
 
-    """
-    Se decide llamar la variable correspondiente al dataframe y se le asigna que se lea nuevamente en una variable,
-    permitiendo que se mantega la lectura desde su ultima modificacion y al final con la funcion concat(), se unen los
-    data frames y se genera uno solo
-    """
+    # Se decide llamar la variable correspondiente al dataframe y se le asigna que se lea nuevamente en una variable,
+    # permitiendo que se mantega la lectura desde su ultima modificacion y al final con la funcion concat(), se unen los
+    # data frames y se genera uno solo
+
     global Workers_csv
     global Products_csv
-    new_data_workers = pd.read_csv('Assets/workers.csv')
+    new_data = pd.read_csv('Assets/workers.csv')
     new_data_products = pd.read_csv('Assets/products.csv')
-                                                    #Se seleciona verdadero para que consever el orden del index
-    Workers_csv = pd.concat([Workers_csv, new_data_workers], ignore_index=True)
     Products_csv = pd.concat([Products_csv, new_data_products], ignore_index=True)
+    Workers_csv = pd.concat([Workers_csv, new_data], ignore_index=True)
 
-
-
-def registrar_Empleado(name, last_name, sex, age, mobile_number, username, password,selling_products = 0):
-
+def registrar_Empleado(name, last_name, sex, age, mobile_number, username, password, selling_products=0):
     if ((Workers_csv['name'] == name) & (Workers_csv['last_name'] == last_name) & (Workers_csv['cel_number'] == mobile_number)).any():
-        output = cprint(f"El siguiente empleado {name} {last_name}, ya se encuentra registrado", "red")
+        return cprint(f"El siguiente empleado {name} {last_name}, ya se encuentra registrado")
     else:
         with open('Assets/workers.csv', mode='+a') as workers:
             workers.write(f"{name},{last_name},{sex},{age},{mobile_number},{username}, {password},{selling_products}\n")
             workers.close()
         time.sleep(2)
         output = cprint("Empleado Registrado Correctamente", "green")
+
     return output
+
 
 def registrar_producto(id_product, name_product, price, quantity):
 
@@ -80,6 +77,7 @@ def main():
             print(sep)
             cprint("\n-----------------Registro de empleado-----------------------\n")
             while True:
+                actualizar_workers_csv()
                 print(f"Ingrese el nombre, apellido, sexo {colored('(M para Masculino y F para Femenino)', 'yellow')}, edad y numero de celular, separados por espacios, o ingresa \'{colored('back', 'light_blue', 'on_black')}\': ")
                 command = input()
                 if command == 'back':
@@ -87,8 +85,7 @@ def main():
                 try:
                     name, last_name, sex, age, cel_number = command.split()
                     username, password = username_and_password(name, last_name)
-                    read_again_datas()
-                    registrar_Empleado(name, last_name, sex, age, cel_number, username, password)
+                    registrar_Empleado(name, last_name, sex, age, int(cel_number), username, password)
 
                 except:
                     cprint("\nERROR AL REGISTRAR EL USAURIO, INGRESA TODOS LOS DATOS", 'red')
